@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 340c3ad83a98e7c4093c32f56f89ee3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  team: 0
   isOnAlert: 0
   alertRange: 1.5
   state: 1
@@ -170,6 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   curHealth: 100
+  healthBarPrefab: {fileID: 6978007225435778780, guid: 4d59cdf46828b4937bab40176d839f45, type: 3}
 --- !u!114 &5414790347904829655
 MonoBehaviour:
   m_ObjectHideFlags: 0
