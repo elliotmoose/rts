@@ -39,11 +39,28 @@ public class Healthbar : MonoBehaviour
   {
     this.target = target;
 
-    for (int i = 0; i < boxCount; i++)
+    // add template box
+    GameObject template = this.transform.GetChild(0).gameObject;
+    boxes.Add(template.GetComponent<Image>());
+
+    for (int i = 0; i < boxCount - 1; i++)
     {
-      GameObject template = this.transform.GetChild(0).gameObject;
       GameObject box = GameObject.Instantiate(template, this.transform);
       boxes.Add(box.GetComponent<Image>());
+    }
+
+    SetViewedAs(Globals.localPlayerTeam);
+  }
+
+  public void SetViewedAs(int team)
+  {
+    Unit targetUnit = target.GetComponent<Unit>();
+    if (targetUnit && targetUnit.team != team)
+    {
+      foreach (Image box in boxes)
+      {
+        box.color = Color.red;
+      }
     }
   }
 }
