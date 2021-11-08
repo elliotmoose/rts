@@ -4,6 +4,6 @@ using UnityEngine;
 
 public static class Globals
 {
-  public static List<Unit> SELECTED_UNITS = new List<Unit>();
+  public static List<Selectable> SELECTED_UNITS = new List<Selectable>();
   public static int localPlayerTeam = 0;
 }

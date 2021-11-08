@@ -119,8 +119,8 @@ public class Marine : Unit
       {
         // todo: check if different team
         Health health = hit.gameObject.GetComponent<Health>();
-        Unit unit = hit.gameObject.GetComponent<Unit>();
-        if (unit && unit.team != this.team && health)
+        Team team = hit.gameObject.GetComponent<Team>();
+        if (team.team != this.GetComponent<Team>().team && health)
         {
           return hit.gameObject.GetComponent<Health>();
         }

@@ -54,8 +54,8 @@ public class Healthbar : MonoBehaviour
 
   public void SetViewedAs(int team)
   {
-    Unit targetUnit = target.GetComponent<Unit>();
-    if (targetUnit && targetUnit.team != team)
+    int targetUnitTeam = target.GetComponent<Team>().team;
+    if (targetUnitTeam != team)
     {
       foreach (Image box in boxes)
       {

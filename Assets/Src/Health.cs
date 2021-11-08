@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+[RequireComponent(typeof(Team))]
 [RequireComponent(typeof(Unit))]
 public class Health : MonoBehaviour
 {
@@ -43,22 +44,30 @@ public class Health : MonoBehaviour
 
   void Die()
   {
-    if (Globals.SELECTED_UNITS.Contains(this.unit))
+    Selectable selectable = this.GetComponent<Selectable>();
+    if (selectable.isSelected)
     {
-      this.unit.Deselect();
+      selectable.Deselect();
     }
+
     if (_healthBarRef)
     {
       GameObject.Destroy(_healthBarRef);
     }
+
     GameObject.Destroy(this.gameObject);
   }
 
   // Start is called before the first frame update
-  void Start()
+  public void Init()
   {
     _healthBarRef = GameObject.Instantiate(healthBarPrefab, GameObject.FindGameObjectWithTag("Canvas").transform);
     _healthBarRef.GetComponent<Healthbar>().Mount(this);
+  }
+
+  void Awake()
+  {
+    this.GetComponent<Team>().onTeamSet.AddListener(Init);
   }
 
   // Update is called once per frame

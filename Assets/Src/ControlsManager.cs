@@ -9,12 +9,16 @@ public class ControlsManager : MonoBehaviour
   {
     NONE,
     MOVE,
-    ATTACK
+    ATTACK,
+    BUILD
   }
   float mDelta = 10; // Pixels. The width border at the edge in which the movement work
   float cameraSpeed = 7.0f;
 
   Command awaitingCommand = Command.NONE;
+  BuildingMeta awaitingBuildingToBuild = null;
+  GameObject placeholderBuilding = null;
+
   void Start()
   {
     Cursor.lockState = CursorLockMode.Confined;
@@ -63,9 +67,13 @@ public class ControlsManager : MonoBehaviour
             {
               //get target to attack 
               // allocate the same offset as the 
-              foreach (Unit unit in Globals.SELECTED_UNITS)
+              foreach (Selectable selectable in Globals.SELECTED_UNITS)
               {
-                unit.CommandMoveAttack(hit.point);
+                Unit unit = selectable.GetComponent<Unit>();
+                if (unit)
+                {
+                  unit.CommandMoveAttack(hit.point);
+                }
               }
             }
             break;
@@ -99,10 +107,14 @@ public class ControlsManager : MonoBehaviour
         Vector3 targetWaypoint = hit.point;
 
         // allocate the same offset as the 
-        foreach (Unit unit in Globals.SELECTED_UNITS)
+        foreach (Selectable selectable in Globals.SELECTED_UNITS)
         {
-          Vector3 randomOffset = (Vector3.one - Vector3.up) * Random.Range(0, 1);
-          unit.CommandMove(targetWaypoint + randomOffset);
+          Unit unit = selectable.GetComponent<Unit>();
+          if (unit)
+          {
+            Vector3 randomOffset = (Vector3.one - Vector3.up) * Random.Range(0, 1);
+            unit.CommandMove(targetWaypoint + randomOffset);
+          }
         }
       }
     }
@@ -110,6 +122,38 @@ public class ControlsManager : MonoBehaviour
     if (Input.GetKeyUp(KeyCode.A))
     {
       this.awaitingCommand = Command.ATTACK;
+    }
+
+    if (Input.GetKey(KeyCode.Escape))
+    {
+      this.awaitingCommand = Command.NONE;
+    }
+
+    if (Input.GetKey(KeyCode.B))
+    {
+      this.awaitingCommand = Command.BUILD;
+      this.awaitingBuildingToBuild = Buildings.singleton.barrack;
+    }
+
+    if (this.awaitingCommand == Command.BUILD)
+    {
+      if (!placeholderBuilding)
+      {
+        placeholderBuilding = GameObject.Instantiate(this.awaitingBuildingToBuild.placeholderPrefab);
+      }
+
+      RaycastHit hit;
+      bool hasHit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200, LayerMask.GetMask(new[] { "Floor" }));
+      placeholderBuilding.SetActive(hasHit);
+      if (hasHit)
+      {
+        Debug.Log(hit.transform.gameObject.name);
+        placeholderBuilding.transform.position = hit.point;
+      }
+    }
+    else if (placeholderBuilding)
+    {
+      GameObject.Destroy(placeholderBuilding);
     }
   }
 
@@ -142,12 +186,13 @@ public class ControlsManager : MonoBehaviour
     foreach (GameObject unitGameObject in selectableUnits)
     {
       Unit unit = unitGameObject.GetComponent<Unit>();
+      Team team = unitGameObject.GetComponent<Team>();
       if (!unit)
       {
         continue;
       }
 
-      if (unit.team != this.playerTeam)
+      if (team.team != Globals.localPlayerTeam)
       {
         continue;
       }
@@ -174,11 +219,11 @@ public class ControlsManager : MonoBehaviour
     {
       foreach (GameObject unit in unitsToSelect)
       {
-        unit.GetComponent<Unit>().Select();
+        unit.GetComponent<Selectable>().Select();
       }
       foreach (GameObject unit in unitsToDeselect)
       {
-        unit.GetComponent<Unit>().Deselect();
+        unit.GetComponent<Selectable>().Deselect();
       }
     }
   }

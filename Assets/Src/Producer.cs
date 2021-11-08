@@ -2,36 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(Selectable))]
 public class Producer : Unit
 {
-    public GameObject unitPrefab;
-    public float productionTime = 2;
-    private float _curProductionTime = 0;
-    public Vector3 wayPoint;
+  public GameObject unitPrefab;
+  public float productionTime = 2;
+  private float _curProductionTime = 0;
 
-    void Start()
+  Transform waypoint
+  {
+    get
     {
-        wayPoint = this.transform.position;
+      return this.transform.Find("WAYPOINT");
     }
+  }
 
-    // Update is called once per frame
-    void Update()
+  void Start()
+  {
+
+  }
+
+  // Update is called once per frame
+  void Update()
+  {
+    _curProductionTime += Time.deltaTime;
+    if (_curProductionTime > productionTime)
     {
-        _curProductionTime += Time.deltaTime;
-        if(_curProductionTime > productionTime) {
-            _curProductionTime = 0;
-            SpawnUnit();
-        }
+      _curProductionTime = 0;
+      SpawnUnit();
     }
 
-    void SpawnUnit() {
-        GameObject go = GameObject.Instantiate(unitPrefab, this.transform.Find("SPAWN_POSITION").position , this.transform.rotation);
-        Unit unit = go.GetComponent<Unit>();
-        unit.team = this.team;
-        unit.CommandMove(wayPoint);
+    LineRenderer lineRenderer = this.GetComponent<LineRenderer>();
+    bool isSelected = this.GetComponent<Selectable>().isSelected;
+    lineRenderer.enabled = isSelected;
+    if (isSelected)
+    {
+      lineRenderer.SetPosition(0, this.transform.position);
+      lineRenderer.SetPosition(1, waypoint.position);
     }
+  }
 
-    public override void CommandMove(Vector3 target) {
-        this.wayPoint = target;
-    }
+  void SpawnUnit()
+  {
+    GameObject go = GameObject.Instantiate(unitPrefab, this.transform.Find("SPAWN_POSITION").position, this.transform.rotation);
+    go.GetComponent<Team>().SetTeam(this.GetComponent<Team>().team);
+    go.GetComponent<Unit>().CommandMove(waypoint.position);
+  }
+
+  public override void CommandMove(Vector3 target)
+  {
+    waypoint.position = target;
+  }
 }
