@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2045236870804921121}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WAYPOINT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3924335604191798121}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SPAWN_POSITION
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,10 @@ GameObject:
   - component: {fileID: 3924335604538504151}
   - component: {fileID: 3924335604538504150}
   - component: {fileID: 6550489174837879179}
-  m_Layer: 0
+  - component: {fileID: 7279621469482755366}
+  - component: {fileID: 670286683861376581}
+  - component: {fileID: 6855104682475281716}
+  m_Layer: 8
   m_Name: Barrack
   m_TagString: Unit
   m_Icon: {fileID: 0}
@@ -173,7 +176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f57db04e7db0854bb34549f98ccc320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  team: 0
   unitPrefab: {fileID: 7194054100963734108, guid: 5996ba55b324e5c4fbeee224da861e0f, type: 3}
   productionTime: 5
 --- !u!208 &3924335604538504150
@@ -291,3 +293,46 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &7279621469482755366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3924335604538504136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d46f128575584ac5be99a207ee654ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 0
+  onTeamSet:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &670286683861376581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3924335604538504136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b6001ed0dd82cc4f8284e0ae6e660c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  curHealth: 100
+  healthBarPrefab: {fileID: 6978007225435778780, guid: 4d59cdf46828b4937bab40176d839f45, type: 3}
+--- !u!114 &6855104682475281716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3924335604538504136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816d563028b2c4fa99aaafb566b16b36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

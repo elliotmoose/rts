@@ -16,7 +16,7 @@ public class ControlsManager : MonoBehaviour
   float cameraSpeed = 7.0f;
 
   Command awaitingCommand = Command.NONE;
-  BuildingMeta awaitingBuildingToBuild = null;
+  BuildingMeta.BuildingType awaitingBuildingType = BuildingMeta.BuildingType.NULL;
   GameObject placeholderBuilding = null;
 
   void Start()
@@ -76,17 +76,39 @@ public class ControlsManager : MonoBehaviour
                 }
               }
             }
+
+            this.awaitingCommand = Command.NONE;
+            break;
+
+          case Command.BUILD:
+            RaycastHit[] hits = RaycastMouse(new string[] { "Floor" });
+            if (hits.Length > 0 && placeholderBuilding)
+            {
+              // build building              
+              Placeholder placeholder = placeholderBuilding.GetComponent<Placeholder>();
+              if (placeholder.CanPlace())
+              {
+                RequestBuildBuilding(hits[0].point, this.awaitingBuildingType);
+                this.awaitingCommand = Command.NONE;
+              }
+            }
             break;
           default:
             break;
         }
-
-        this.awaitingCommand = Command.NONE;
       }
       else
       {
         _isDraggingMouseBox = true;
         _dragStartPosition = Input.mousePosition;
+      }
+    }
+
+    if (Input.GetKey(KeyCode.Escape))
+    {
+      if (this.awaitingCommand != Command.NONE)
+      {
+        this.awaitingCommand = Command.NONE;
       }
     }
 
@@ -132,23 +154,24 @@ public class ControlsManager : MonoBehaviour
     if (Input.GetKey(KeyCode.B))
     {
       this.awaitingCommand = Command.BUILD;
-      this.awaitingBuildingToBuild = Buildings.singleton.barrack;
+      this.awaitingBuildingType = BuildingMeta.BuildingType.Barrack;
     }
 
-    if (this.awaitingCommand == Command.BUILD)
+    if (this.awaitingCommand == Command.BUILD && this.awaitingBuildingType != BuildingMeta.BuildingType.NULL)
     {
       if (!placeholderBuilding)
       {
-        placeholderBuilding = GameObject.Instantiate(this.awaitingBuildingToBuild.placeholderPrefab);
+        BuildingMeta meta = Buildings.MetaForBuildingType(this.awaitingBuildingType);
+        placeholderBuilding = GameObject.Instantiate(meta.placeholderPrefab);
       }
 
-      RaycastHit hit;
-      bool hasHit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200, LayerMask.GetMask(new[] { "Floor" }));
+      RaycastHit[] hits = RaycastMouse(new[] { "Floor" });
+      bool hasHit = hits.Length != 0;
       placeholderBuilding.SetActive(hasHit);
+
       if (hasHit)
       {
-        Debug.Log(hit.transform.gameObject.name);
-        placeholderBuilding.transform.position = hit.point;
+        placeholderBuilding.transform.position = hits[0].point;
       }
     }
     else if (placeholderBuilding)
@@ -225,6 +248,23 @@ public class ControlsManager : MonoBehaviour
       {
         unit.GetComponent<Selectable>().Deselect();
       }
+    }
+  }
+
+  private RaycastHit[] RaycastMouse(string[] layers, float distance = 200)
+  {
+    return Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition), distance, LayerMask.GetMask(layers));
+  }
+
+  void RequestBuildBuilding(Vector3 position, BuildingMeta.BuildingType buildingType)
+  {
+    BuildingMeta meta = Buildings.MetaForBuildingType(buildingType);
+    if (meta)
+    {
+      GameObject newBuilding = GameObject.Instantiate(meta.prefab, position, Quaternion.identity);
+      Producer producer = newBuilding.GetComponent<Producer>();
+      Team team = newBuilding.GetComponent<Team>();
+      team.SetTeam(Globals.localPlayerTeam);
     }
   }
 }

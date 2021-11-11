@@ -686,6 +686,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 721059726777868056, guid: 92b6e0f4a8540124b8956a7c6c6a4938, type: 3}
+      propertyPath: team
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3924335604538504136, guid: 92b6e0f4a8540124b8956a7c6c6a4938, type: 3}
       propertyPath: m_Name
       value: Barrack

@@ -16,6 +16,6 @@ MonoBehaviour:
   cost: 0
   buildDuration: 1
   prefab: {fileID: 3924335604538504136, guid: 92b6e0f4a8540124b8956a7c6c6a4938, type: 3}
-  placeholderPrefab: {fileID: 3924335604538504136, guid: 92b6e0f4a8540124b8956a7c6c6a4938, type: 3}
+  placeholderPrefab: {fileID: 537037961137536275, guid: 448243eee2b124bf9ad03befcc1fc99a, type: 3}
   spawnableUnits:
   - {fileID: 11400000, guid: e5190f23fc109460295e34712e9d293c, type: 2}

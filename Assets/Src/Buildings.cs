@@ -11,4 +11,15 @@ public class Buildings : MonoBehaviour
   {
     singleton = this;
   }
+
+  public static BuildingMeta MetaForBuildingType(BuildingMeta.BuildingType buildingType)
+  {
+    switch (buildingType)
+    {
+      case BuildingMeta.BuildingType.Barrack:
+        return singleton.barrack;
+      default:
+        return null;
+    }
+  }
 }
