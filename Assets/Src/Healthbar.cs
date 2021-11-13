@@ -19,7 +19,7 @@ public class Healthbar : MonoBehaviour
   void Update()
   {
     if (!target) return;
-    this.transform.position = Camera.main.WorldToScreenPoint(target.transform.position) + Vector3.up * verticalOffset;
+    UpdatePosition();
 
     float binnedHealth = (target.curHealth / target.maxHealth) * (float)boxCount;
     for (int i = 0; i < boxCount; i++)
@@ -38,6 +38,7 @@ public class Healthbar : MonoBehaviour
   public void Mount(Health target)
   {
     this.target = target;
+    UpdatePosition();
 
     // add template box
     GameObject template = this.transform.GetChild(0).gameObject;
@@ -50,6 +51,12 @@ public class Healthbar : MonoBehaviour
     }
 
     SetViewedAs(Globals.localPlayerTeam);
+  }
+
+  void UpdatePosition()
+  {
+    if (!target) return;
+    this.transform.position = Camera.main.WorldToScreenPoint(target.transform.position) + Vector3.up * verticalOffset;
   }
 
   public void SetViewedAs(int team)

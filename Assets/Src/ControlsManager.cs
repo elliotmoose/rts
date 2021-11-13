@@ -72,7 +72,7 @@ public class ControlsManager : MonoBehaviour
                 Unit unit = selectable.GetComponent<Unit>();
                 if (unit)
                 {
-                  unit.CommandMoveAttack(hit.point);
+                  unit.ClientRequestCommandMoveAttack(hit.point);
                 }
               }
             }
@@ -135,7 +135,7 @@ public class ControlsManager : MonoBehaviour
           if (unit)
           {
             Vector3 randomOffset = (Vector3.one - Vector3.up) * Random.Range(0, 1);
-            unit.CommandMove(targetWaypoint + randomOffset);
+            unit.ClientRequestCommandMove(targetWaypoint + randomOffset);
           }
         }
       }

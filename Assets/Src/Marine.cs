@@ -139,13 +139,13 @@ public class Marine : Unit
     base.Move(target);
   }
 
-  public override void CommandMoveAttack(Vector3 target)
+  public override void ServerCommandMoveAttack(Vector3 target)
   {
     isOnAlert = true;
     Move(target);
   }
 
-  public override void CommandMove(Vector3 target)
+  public override void ServerCommandMove(Vector3 target)
   {
     isOnAlert = false;
     Move(target);

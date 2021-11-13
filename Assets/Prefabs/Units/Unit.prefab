@@ -17,8 +17,12 @@ GameObject:
   - component: {fileID: 6888163515636616335}
   - component: {fileID: 8028321439234596740}
   - component: {fileID: 5414790347904829655}
+  - component: {fileID: 8097487229224692073}
+  - component: {fileID: 6676924360698640744}
+  - component: {fileID: 7078550222174307077}
+  - component: {fileID: -684629719158668689}
   m_Layer: 0
-  m_Name: MeleeUnit
+  m_Name: Unit
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,7 +140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 340c3ad83a98e7c4093c32f56f89ee3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  team: 0
   isOnAlert: 0
   alertRange: 1.5
   state: 1
@@ -186,3 +189,74 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   range: 0.8
+--- !u!114 &8097487229224692073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7194054100963734108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d46f128575584ac5be99a207ee654ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 0
+  onTeamSet:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6676924360698640744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7194054100963734108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816d563028b2c4fa99aaafb566b16b36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7078550222174307077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7194054100963734108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+--- !u!114 &-684629719158668689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7194054100963734108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  InLocalSpace: 0
+  Interpolate: 1
+  CanCommitToTransform: 0

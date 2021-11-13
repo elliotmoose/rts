@@ -67,6 +67,7 @@ public class Health : MonoBehaviour
 
   void Awake()
   {
+    Init();
     this.GetComponent<Team>().onTeamSet.AddListener(Init);
   }
 
